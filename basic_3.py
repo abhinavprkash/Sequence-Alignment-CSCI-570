@@ -56,9 +56,7 @@ def seq_alignUtils(s1, s2):
         for j in range(1, n + 1):
             alpha = cost_for_alignment[convert_to_string(s1[i - 1])][convert_to_string(s2[j - 1])]
             opt[i][j] = min(opt[i - 1][j - 1] + alpha, opt[i - 1][j] + delta, opt[i][j - 1] + delta)
-    # return opt[n][m]
-    # print(opt[m][n])
-    # print(opt[n][m])
+  
     final_cost = opt[m][n]
     
     i = m
@@ -104,7 +102,7 @@ def seq_alignUtils(s1, s2):
     memory_consumed = end_algo_memory - start_algo_memory
     
     return str(final_cost) + "\n" + final_string1 + "\n" + final_string2 + "\n" +str(time_taken) + "\n" + str(memory_consumed) 
-    # return 'string_inputs'
+
   
 def getString(s, index):
     modified_string = s[:index + 1] + s + s[index + 1:]  
