@@ -31,7 +31,7 @@ def seq_alignUtils(s1, s2):
         opt[0][j] = j * delta
     for i in range(1, n + 1):
         for j in range(1, m + 1):
-            print(cost_for_alignment[convert_to_string(s1[i - 1])][convert_to_string(s2[j - 1])])
+            # print(cost_for_alignment[convert_to_string(s1[i - 1])][convert_to_string(s2[j - 1])])
             opt[i][j] = min(opt[i - 1][j - 1] + cost_for_alignment[convert_to_string(s1[i - 1])][convert_to_string(s2[j - 1])],
                             opt[i - 1][j] + delta,
                             opt[i][j - 1] + delta)
