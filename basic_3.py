@@ -48,7 +48,7 @@ def seq_alignment(string_inputs, randomize1, randomize2):
         s1 = getString(s1, index)
     print(s1)
     s2 = string_inputs[1]
-    for inde in randomize2:
+    for index in randomize2:
         s2 = getString(s2, index)
     print(s2)
     return seq_alignUtils(s1, s2)
