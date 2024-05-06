@@ -1,4 +1,7 @@
 import sys
+from resource import * 
+import time
+import psutil
 # Initialise cost matrix for gap penalties and delta in order A, C, G, T
 cost_for_alignment = [
     [0, 110, 48, 94],
@@ -18,9 +21,29 @@ def convert_to_string(s):
     return 2
   elif s == 'T':
     return 3    
+  
+def process_memory():
+  process = psutil.Process() 
+  memory_info = process.memory_info()
+  memory_consumed = int(memory_info.rss/1024) 
+  return memory_consumed
+  
+def time_wrapper(): 
+  start_time = time.time() 
+  call_algorithm()
+  end_time = time.time()
+  time_taken = (end_time - start_time)*1000 
+  return time_taken
 
 def seq_alignUtils(s1, s2):
     # implement basic algorithm here
+    
+    time_taken = 0.0  
+    memory_consumed = 0.0
+    
+    start_algo_time = time.time()
+    start_algo_memory = process_memory()
+    
     m = len(s1)
     n = len(s2)
     opt = [[0 for i in range(n + 1)] for j in range(m + 1)]
@@ -34,10 +57,55 @@ def seq_alignUtils(s1, s2):
             alpha = cost_for_alignment[convert_to_string(s1[i - 1])][convert_to_string(s2[j - 1])]
             opt[i][j] = min(opt[i - 1][j - 1] + alpha, opt[i - 1][j] + delta, opt[i][j - 1] + delta)
     # return opt[n][m]
-    print(opt[m][n])
+    # print(opt[m][n])
     # print(opt[n][m])
-    return 'string_inputs'
-
+    final_cost = opt[m][n]
+    
+    i = m
+    j = n
+    
+    final_string1 = ""
+    final_string2 = ""
+    
+    while i > 0 and j > 0:
+        alpha = cost_for_alignment[convert_to_string(s1[i - 1])][convert_to_string(s2[j - 1])]
+        if opt[i][j] == opt[i - 1][j - 1] + alpha:
+            final_string1 = s1[i - 1] + final_string1
+            final_string2 = s2[j - 1] + final_string2
+            i -= 1
+            j -= 1
+        elif opt[i][j] == opt[i - 1][j] + delta:
+            final_string1 = s1[i - 1] + final_string1
+            final_string2 = "_" + final_string2
+            i -= 1
+            
+        else:
+            final_string2 = s2[j - 1] + final_string2
+            final_string1 = "_" + final_string1
+            j -= 1
+    
+    while i > 0:
+        final_string1 = s1[i - 1] + final_string1
+        final_string2 = "_" + final_string2
+        i -= 1
+    
+    while j > 0:
+        final_string2 = s2[j - 1] + final_string2
+        final_string1 = "_" + final_string1
+        j -= 1
+        
+    print (final_string1)
+    print (final_string2)
+    
+    end_algo_time = time.time()
+    end_algo_memory = process_memory()
+    
+    time_taken = (end_algo_time - start_algo_time)*1000
+    memory_consumed = end_algo_memory - start_algo_memory
+    
+    return str(final_cost) + "\n" + final_string1 + "\n" + final_string2 + "\n" +str(time_taken) + "\n" + str(memory_consumed) 
+    # return 'string_inputs'
+  
 def getString(s, index):
     modified_string = s[:index + 1] + s + s[index + 1:]  
     return modified_string
