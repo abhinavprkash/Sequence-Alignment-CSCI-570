@@ -1,5 +1,5 @@
 import sys
-from resource import * 
+# from resource import * 
 import time
 import psutil
 # Initialise cost matrix for gap penalties and delta in order A, C, G, T
