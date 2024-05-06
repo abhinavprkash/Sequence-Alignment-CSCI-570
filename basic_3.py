@@ -6,9 +6,38 @@ cost_for_alignment = [
     [48, 118, 0, 110],
     [94, 48, 110, 0]
 ]
- 
+
+delta = 30
+
+def convert_to_string(s):
+  if s == 'A':
+    return 0
+  elif s == 'C':
+    return 1
+  elif s == 'G':
+    return 2
+  elif s == 'T':
+    return 3    
+
 def seq_alignUtils(s1, s2):
     # implement basic algorithm here
+    n = len(s1)
+    m = len(s2)
+    opt = [[0 for i in range(n + 1)] for j in range(m + 1)]
+    # print(opt)
+    for i in range(n + 1):
+        opt[i][0] = i * delta
+    for j in range(m + 1):
+        opt[0][j] = j * delta
+    for i in range(1, n + 1):
+        for j in range(1, m + 1):
+            print(cost_for_alignment[convert_to_string(s1[i - 1])][convert_to_string(s2[j - 1])])
+            opt[i][j] = min(opt[i - 1][j - 1] + cost_for_alignment[convert_to_string(s1[i - 1])][convert_to_string(s2[j - 1])],
+                            opt[i - 1][j] + delta,
+                            opt[i][j - 1] + delta)
+    # return opt[n][m]
+    print(opt)  
+    # print(opt[n][m])
     return 'string_inputs'
 
 def getString(s, index):
@@ -25,6 +54,7 @@ def seq_alignment(string_inputs, randomize1, randomize2):
         s2 = getString(s2, index)
     print(s2)
     return seq_alignUtils(s1, s2)
+  
 
 def main():
     if len(sys.argv) != 3:
