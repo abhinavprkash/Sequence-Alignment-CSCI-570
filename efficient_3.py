@@ -55,7 +55,6 @@ def seq_alignGetCost(s1, s2):
         
   
     final_cost = curr[n]
-    # print("final cost",final_cost)
     return curr
 
 def seq_alignDnC(x,y):
@@ -133,7 +132,6 @@ def seq_alignDnC(x,y):
             return (all_gaps,final_string1,final_string2)
         
     else:
-        # print("Control reached here")
         xl_cost=seq_alignGetCost(x[0:m//2],y)
         xr_cost=seq_alignGetCost(x[m//2:][::-1],y[::-1])
 
@@ -170,8 +168,6 @@ def seq_alignUtils(s1, s2):
     # final_cost=seq_alignGetCost(s1,s2)[len(s2)]
     final_cost,final_string1,final_string2=seq_alignDnC(s1,s2)
         
-    print (final_string1)
-    print (final_string2)
 
     # implement memory efficient algorithm for Sequence alignment
     
@@ -221,9 +217,6 @@ def main():
                         randomize1.append(int(line))
                     else:
                         randomize2.append(int(line))
-            print(string_inputs)  
-            print(randomize1)
-            print(randomize2)
     except FileNotFoundError:
         print("Input file not found.")
         return
@@ -231,7 +224,6 @@ def main():
     try:
         with open(output_file, 'w') as f:
             f.write(seq_alignment(string_inputs,randomize1,randomize2)) 
-        print("Output file created:", output_file)
     except Exception as e:
         print("Error occurred while writing to the output file:", e)
 

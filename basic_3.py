@@ -91,9 +91,6 @@ def seq_alignUtils(s1, s2):
         final_string2 = s2[j - 1] + final_string2
         final_string1 = "_" + final_string1
         j -= 1
-        
-    print (final_string1)
-    print (final_string2)
     
     end_algo_time = time.time()
     end_algo_memory = process_memory()
@@ -112,11 +109,9 @@ def seq_alignment(string_inputs, randomize1, randomize2):
     s1 = string_inputs[0]
     for index in randomize1:
         s1 = getString(s1, index)
-    print(s1)
     s2 = string_inputs[1]
     for index in randomize2:
         s2 = getString(s2, index)
-    print(s2)
     return seq_alignUtils(s1, s2)
   
 
@@ -143,9 +138,6 @@ def main():
                         randomize1.append(int(line))
                     else:
                         randomize2.append(int(line))
-            print(string_inputs)  
-            print(randomize1)
-            print(randomize2)
     except FileNotFoundError:
         print("Input file not found.")
         return
@@ -153,7 +145,6 @@ def main():
     try:
         with open(output_file, 'w') as f:
             f.write(seq_alignment(string_inputs,randomize1,randomize2)) 
-        print("Output file created:", output_file)
     except Exception as e:
         print("Error occurred while writing to the output file:", e)
 
